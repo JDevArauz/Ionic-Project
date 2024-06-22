@@ -1,0 +1,30 @@
+<ion-content color="light">
+  <div class="p-4">
+    <div class="report-container bg-white rounded-lg shadow-md p-4 mb-4">
+      <ion-card-title class="text-xl font-bold text-blue-600 text-center mb-3">
+        REPORTE DE CARGAS DE TRABAJO
+      </ion-card-title>
+      <div class="bg-blue-300 rounded-lg">
+        <div class="text-center text-white font-bold mb-2">TOP - TÉCNICOS MÁS EFICIENTES</div>
+      </div>
+        <div class="grid grid-cols-3 font-bold">
+          <div class="text-center border text-white bg-blue-400">NOMBRE</div>
+          <div class="text-center border text-white bg-blue-400">PENDIENTE</div>
+          <div class="text-center border text-white bg-blue-400">RESUELTOS</div>
+        </div>
+        <div *ngFor="let tecnico of tecnicos" class="grid grid-cols-3">
+          <div class="text-center border text-white bg-blue-400">{{ tecnico.nombre }}</div>
+          <div class="text-center border text-white bg-blue-400">{{ tecnico.pendiente }}</div>
+          <div class="text-center border text-white bg-blue-400">{{ tecnico.resueltos }}</div>
+        </div>
+        <div class="mt-4 bg-white rounded-lg p-4 flex justify-center w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
+          <canvas id="doughnutChart"></canvas>
+        </div>
+    <div class="flex justify-center mt-4">
+      <ion-button (click)="downloadPDF()" class="text-white font-bold">
+        IMPRIMIR REPORTE
+      </ion-button>
+    </div>
+  </div>
+</div>
+</ion-content>

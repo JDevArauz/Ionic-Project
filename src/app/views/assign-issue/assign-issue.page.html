@@ -1,0 +1,127 @@
+<ion-content class="ion-padding" color="primary">
+  <ion-card-header color="primary">
+    <ion-card-title class="text-center text-2xl font-bold text-white">Asignar Incidencia</ion-card-title>
+  </ion-card-header>
+  <div class="p-4 bg-white rounded-lg shadow-lg">
+    <form [formGroup]="incidentForm" (ngSubmit)="onSubmit()">
+      <!-- Título de la Incidencia -->
+      <div class="mb-4">
+        <label for="titulo" class="block text-sm font-bold text-blue-700">Título de la Incidencia</label>
+        <input
+          id="titulo"
+          formControlName="titulo"
+          type="text"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:border-indigo-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50 text-black"
+          [value]="incidencia?.CT_Titulo_Incidencia || ''"
+          readonly
+        />
+      </div>
+
+      <!-- Seleccionar Técnico Disponible -->
+      <div class="mb-4">
+        <label for="tecnico" class="block text-sm font-bold text-blue-700">Seleccionar Técnico Disponible</label>
+        <select
+          id="tecnico"
+          formControlName="tecnico"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:border-indigo-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50"
+          required
+        >
+          <option *ngFor="let tecnico of tecnicos" [value]="tecnico?.CN_ID_Usuario">{{ tecnico?.CT_Nombre }}</option>
+        </select>
+        <div
+          *ngIf="incidentForm.get('tecnico')?.invalid && (incidentForm.get('tecnico')?.dirty || incidentForm.get('tecnico')?.touched)"
+          class="text-red-500 text-sm mt-1"
+        >
+          Técnico es requerido.
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Afectación del Incidente -->
+        <div class="mb-4">
+          <label for="afectacion" class="block text-sm font-bold text-blue-700">Afectación del Incidente</label>
+          <select
+            id="afectacion"
+            formControlName="afectacion"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:border-indigo-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50"
+            required
+          >
+            <option *ngFor="let afectacion of afectaciones" [value]="afectacion?.CN_ID_Afectacion">{{ afectacion?.CT_Descripcion }}</option>
+          </select>
+          <div
+            *ngIf="incidentForm.get('afectacion')?.invalid && (incidentForm.get('afectacion')?.dirty || incidentForm.get('afectacion')?.touched)"
+            class="text-red-500 text-sm mt-1"
+          >
+            Afectación es requerida.
+          </div>
+        </div>
+
+        <!-- Riesgo del Incidente -->
+        <div class="mt-4">
+          <label for="riesgo" class="block text-sm font-bold text-blue-700">Riesgo del Incidente</label>
+          <select
+            id="riesgo"
+            formControlName="riesgo"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:border-indigo-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50"
+            required
+          >
+            <option *ngFor="let riesgo of riesgos" [value]="riesgo?.CN_ID_Riesgo">{{ riesgo?.CT_Descripcion }}</option>
+          </select>
+          <div
+            *ngIf="incidentForm.get('riesgo')?.invalid && (incidentForm.get('riesgo')?.dirty || incidentForm.get('riesgo')?.touched)"
+            class="text-red-500 text-sm mt-1"
+          >
+            Riesgo es requerido.
+          </div>
+        </div>
+
+        <!-- Prioridad del Incidente -->
+        <div class="mb-4">
+          <label for="prioridad" class="block text-sm font-bold text-blue-700">Prioridad del Incidente</label>
+          <select
+            id="prioridad"
+            formControlName="prioridad"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:border-indigo-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50"
+            required
+          >
+            <option *ngFor="let prioridad of prioridades" [value]="prioridad?.CN_ID_Prioridad">{{ prioridad?.CT_Descripcion }}</option>
+          </select>
+          <div
+            *ngIf="incidentForm.get('prioridad')?.invalid && (incidentForm.get('prioridad')?.dirty || incidentForm.get('prioridad')?.touched)"
+            class="text-red-500 text-sm mt-1"
+          >
+            Prioridad es requerida.
+          </div>
+        </div>
+
+        <!-- Categoría del Incidente -->
+        <div class="mb-4">
+          <label for="categoria" class="block text-sm font-bold text-blue-700">Categoría del Incidente</label>
+          <select
+            id="categoria"
+            formControlName="categoria"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:border-indigo-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50"
+            required
+          >
+            <option *ngFor="let categoria of categorias" [value]="categoria?.CN_ID_Categoria">{{ categoria?.CT_Descripcion }}</option>
+          </select>
+          <div
+            *ngIf="incidentForm.get('categoria')?.invalid && (incidentForm.get('categoria')?.dirty || incidentForm.get('categoria')?.touched)"
+            class="text-red-500 text-sm mt-1"
+          >
+            Categoría es requerida.
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        >
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</ion-content>

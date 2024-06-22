@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Filtrar Incidencias</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="filterForm">
+    <ion-item>
+      <ion-label>Estado</ion-label>
+      <ion-select formControlName="estado">
+        <ion-select-option *ngFor="let estado of estados" [value]="estado.CN_ID_Estado">{{ estado.CT_Descripcion }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Prioridad</ion-label>
+      <ion-select formControlName="prioridad">
+        <ion-select-option *ngFor="let prioridad of prioridades" [value]="prioridad.CN_ID_Prioridad">{{ prioridad.CT_Descripcion }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button expand="block" (click)="applyFilter()">Aplicar Filtro</ion-button>
+  </form>
+</ion-content>

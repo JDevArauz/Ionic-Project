@@ -1,0 +1,55 @@
+<ion-content color="primary">
+  <div class="p-4">
+    <form [formGroup]="searchForm">
+        <div class="flex items-end">
+          <ion-input formControlName="buscar" placeholder="Buscar" class="mr-2"></ion-input>
+          <ion-button (click)="onSearch()" color="primary">
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+          </ion-button>
+      </div>
+    </form>
+
+    <div class="incident-cards">
+      <div *ngFor="let incidencia of incidencias" class="card bg-white rounded-lg shadow-md p-4 mb-4">
+        <div class="card-content">
+          <ion-card-title class="text-xl font-bold text-black text-center mb-3">
+            {{ incidencia.T_Incidencium.CT_Titulo_Incidencia }}
+          </ion-card-title>
+          <div class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>ID Incidente:</strong> {{ incidencia.CN_ID_Incidente }}</div>
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Diagnóstico:</strong> {{ incidencia.CT_Diagnostico }}</div>
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Fecha y hora de registro:</strong> {{ incidencia.CF_Fecha_Hora | date: 'short' }}</div>
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Requiere Compra:</strong> {{ incidencia.CN_Requiere_Compra }}</div>
+          </div>
+
+          <div class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Tiempo de solución estimado:</strong> {{ incidencia.CN_Tiempo_Solucion_Estimado }} hrs</div>
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <div class="text-red-700"><strong>Observaciones:</strong> {{ incidencia.CT_Observaciones }}</div>
+          </div>
+          <div class="flex items-center justify-end">
+            <ion-button size="small" fill="clear" (click)="verEvidencias(incidencia)">
+              <ion-icon slot="icon-only" name="images"></ion-icon>
+              <strong>Ver Evidencias</strong>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-title class="text-right text-gray-600 font-sans">
+      © 2024 Universidad de Costa Rica.
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

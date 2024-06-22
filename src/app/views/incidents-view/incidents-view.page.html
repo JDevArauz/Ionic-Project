@@ -1,0 +1,91 @@
+<ion-content color="primary">
+  <div class="p-4">
+    <form *ngIf="!isUser" [formGroup]="searchForm">
+      <div class="flex justify-between items-center mb-4">
+        <ion-button (click)="openFilterModal()" color="primary" class="flex items-center">
+          <ion-icon slot="start" name="filter"></ion-icon>
+          Filtro
+        </ion-button>
+        <div class="flex items-center">
+          <ion-input formControlName="buscar" placeholder="Buscar" class="mr-2"></ion-input>
+          <ion-button (click)="onSearch()" color="primary">
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </form>
+
+    <div class="incident-cards">
+      <div *ngFor="let incidencia of incidencias" class="card bg-white rounded-lg shadow-md p-4 mb-4">
+        <div class="card-content">
+          <ion-card-title class="text-xl font-bold text-black text-center mb-3">
+            {{ incidencia.CT_Titulo_Incidencia }}
+          </ion-card-title>
+          <div class="flex justify-between items-center mb-2">
+            <div *ngIf="!isUser" class="text-gray-700"><strong>ID Incidente:</strong> {{ incidencia.CN_ID_Incidente }}</div>
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <div *ngIf="isUser || user === 3" class="text-gray-700"><strong>Descripción:</strong> {{ incidencia.CT_Descripcion_Incidencia }}</div>
+          </div>
+          <div *ngIf="isUser || user === 3" class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Fecha y hora de registro:</strong> {{ incidencia.CF_Fecha_Hora_Registro | date: 'short' }}</div>
+          </div>
+
+          <div *ngIf="isUser || user === 3" class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Lugar:</strong> {{ incidencia.CT_Lugar_Incidencia }}</div>
+          </div>
+          <div *ngIf="!isUser && user !== 3" class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Estado:</strong> {{ incidencia.T_Estado.CT_Descripcion }}</div>
+          </div>
+          <div *ngIf="!isUser && user !== 3" class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Justificación Estado:</strong> {{ incidencia.CT_Justificacion_Estado }}</div>
+          </div>
+          <div *ngIf="!isUser && user !== 3" class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Prioridad:</strong> {{ incidencia.T_Prioridad.CT_Descripcion }}</div>
+          </div>
+          <div *ngIf="!isUser && user !== 3" class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Riesgo:</strong> {{ incidencia.T_Riesgo.CT_Descripcion }}</div>
+          </div>
+          <div *ngIf="!isUser && user !== 3" class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Afectación:</strong> {{ incidencia.T_Afectacion.CT_Descripcion }}</div>
+          </div>
+          <div *ngIf="!isUser && user !== 3" class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Categoría:</strong> {{ incidencia.T_Categoria.CT_Descripcion }}</div>
+          </div>
+          <div *ngIf="!isUser && user !== 3" class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Costos:</strong> {{ incidencia.CD_Costos_Incidencia | currency }}</div>
+          </div>
+          <div *ngIf="!isUser && user !== 3" class="flex justify-between items-center mb-2">
+            <div class="text-gray-700"><strong>Duración de Gestión:</strong> {{ incidencia.CN_Duracion_Gestion_Incidencia }} minutos</div>
+          </div>
+          <div *ngIf="!isUser && user !== 3" class="flex items-center justify-end">
+            <ion-button size="small" fill="clear" (click)="onEdit(incidencia)">
+              <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+              <strong>Realizar diagnóstico</strong>
+            </ion-button>
+          </div>
+          <div *ngIf="!isUser && user === 3" class="flex items-center justify-end">
+            <ion-button size="small" fill="clear" (click)="asignarIncidencia(incidencia)">
+              <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+              <strong>Asignar Técnico</strong>
+            </ion-button>
+          </div>
+          <div class="flex items-center justify-end">
+            <ion-button size="small" fill="clear" (click)="verEvidencias(incidencia)">
+              <ion-icon slot="icon-only" name="images"></ion-icon>
+              <strong>Ver Evidencias</strong>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-title class="text-right text-gray-600 font-sans">
+      © 2024 Universidad de Costa Rica.
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

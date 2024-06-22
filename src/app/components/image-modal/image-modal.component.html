@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Ver Evidencias</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="grid grid-cols-2 gap-2">
+    <div *ngFor="let photo of photos; let i = index" class="relative">
+      <img [src]="photo" alt="Foto tomada" class="w-full h-full sm:h-40 md:h-64 lg:h-80 xl:h-96" style="border: 1px solid #ccc;">
+    </div>
+  </div>
+</ion-content>

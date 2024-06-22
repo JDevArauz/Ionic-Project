@@ -1,0 +1,74 @@
+<ion-content color="primary">
+  <ion-card-header color="primary">
+    <ion-card-title class="text-center text-2xl font-bold text-white">Registrar Incidencia</ion-card-title>
+  </ion-card-header>
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    <ion-card-content color="primary">
+      <div class="rounded-lg border p-5 bg-white">
+        <div class="mb-4">
+          <label for="titulo" class="block text-sm font-bold text-blue-700">Título de la Incidencia</label>
+          <input
+            formControlName="CT_Titulo_Incidencia"
+            type="text"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:border-indigo-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50"
+            [ngClass]="{'border-red-500': registroForm.controls['CT_Titulo_Incidencia'].invalid && (registroForm.controls['CT_Titulo_Incidencia'].dirty || registroForm.controls['CT_Titulo_Incidencia'].touched)}"
+            placeholder="Ingrese el título"
+          />
+          <div *ngIf="registroForm.controls['CT_Titulo_Incidencia'].invalid && (registroForm.controls['CT_Titulo_Incidencia'].dirty || registroForm.controls['CT_Titulo_Incidencia'].touched)" class="text-red-500 text-sm mt-1">
+            Título es requerido.
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="descripcion" class="block text-sm font-bold text-blue-700">Descripción de la Incidencia</label>
+          <textarea
+            formControlName="CT_Descripcion_Incidencia"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:border-indigo-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50"
+            [ngClass]="{'border-red-500': registroForm.controls['CT_Descripcion_Incidencia'].invalid && (registroForm.controls['CT_Descripcion_Incidencia'].dirty || registroForm.controls['CT_Descripcion_Incidencia'].touched)}"
+            placeholder="Ingrese la descripción"
+          ></textarea>
+          <div *ngIf="registroForm.controls['CT_Descripcion_Incidencia'].invalid && (registroForm.controls['CT_Descripcion_Incidencia'].dirty || registroForm.controls['CT_Descripcion_Incidencia'].touched)" class="text-red-500 text-sm mt-1">
+            Descripción es requerida.
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="lugar" class="block text-sm font-bold text-blue-700">Lugar del Incidente</label>
+          <input
+            formControlName="CT_Lugar_Incidencia"
+            type="text"
+            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm hover:border-blue-500 focus:border-indigo-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50"
+            [ngClass]="{'border-red-500': registroForm.controls['CT_Lugar_Incidencia'].invalid && (registroForm.controls['CT_Lugar_Incidencia'].dirty || registroForm.controls['CT_Lugar_Incidencia'].touched)}"
+            placeholder="Ingrese el lugar"
+          />
+          <div *ngIf="registroForm.controls['CT_Lugar_Incidencia'].invalid && (registroForm.controls['CT_Lugar_Incidencia'].dirty || registroForm.controls['CT_Lugar_Incidencia'].touched)" class="text-red-500 text-sm mt-1">
+            Lugar es requerido.
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="imagenes" class="block text-sm font-bold text-blue-700">Adjuntar Imágenes (Evidencia)</label>
+          <div class="flex justify-between mt-2">
+            <ion-button class="text-white" (click)="tomarFoto()">Tomar Foto</ion-button>
+            <ion-button class="text-white" (click)="subirFotos()">Subir Fotos</ion-button>
+          </div>
+          <div class="grid grid-cols-3 gap-4 mt-4">
+            <div *ngFor="let photo of photos; let i = index" class="relative">
+              <img [src]="photo" alt="Foto tomada" class="w-full h-auto sm:h-40 md:h-64 lg:h-80 xl:h-96" style="border: 1px solid #ccc;">
+              <!-- Botón de eliminar -->
+              <ion-button (click)="eliminarFoto(i)" color="danger" class="absolute top-0 right-0 mt-2 mr-2">
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+        </div>
+        <ion-button type="submit" expand="block" class="font-bold text-white">
+          Guardar
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="ligth">
+    <ion-title class="text-right text-gray-600 font-sans">© 2024 Universidad de Costa Rica.</ion-title>
+  </ion-toolbar>
+</ion-footer>
