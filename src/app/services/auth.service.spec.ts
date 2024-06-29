@@ -40,7 +40,7 @@ describe('AuthService', () => {
       accessToken: 'access-token',
       refreshToken: 'refresh-token'
       };
-    const credentials = { CT_Correo: 'j2@ucr.ac.cr', CT_Contrasena: '1111' };
+    const credentials = { CT_Correo: 'usuario@ucr.ac.cr', CT_Contrasena: '1111' };
 
     storageSpy.set.and.returnValue(Promise.resolve());
 

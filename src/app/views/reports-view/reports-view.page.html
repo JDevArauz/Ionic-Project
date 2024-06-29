@@ -14,8 +14,8 @@
         </div>
         <div *ngFor="let tecnico of tecnicos" class="grid grid-cols-3">
           <div class="text-center border text-white bg-blue-400">{{ tecnico.nombre }}</div>
-          <div class="text-center border text-white bg-blue-400">{{ tecnico.pendiente }}</div>
-          <div class="text-center border text-white bg-blue-400">{{ tecnico.resueltos }}</div>
+          <div class="text-center border text-white bg-blue-400">{{ tecnico.totalPendientes }}</div>
+          <div class="text-center border text-white bg-blue-400">{{ tecnico.totalResueltos }}</div>
         </div>
         <div class="mt-4 bg-white rounded-lg p-4 flex justify-center w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
           <canvas id="doughnutChart"></canvas>

@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./manager.page.scss'],
 })
 export class ManagerPage implements OnInit {
-  toast: any = true;
   userName: string = '';
 
   constructor(private navCtrl: NavController, private router: Router, private user: UserService) { }
@@ -21,17 +20,17 @@ export class ManagerPage implements OnInit {
 
   verIncidenciasGeneradas() {
     // Lógica para redirigir a la página de ver incidencias generadas
-    this.router.navigate(['/incidents-view'],{ state: { toast: this.toast } });
+    this.router.navigate(['/incidents-view'],{ state: { toast: 0 } });
   }
 
   asignarIncidencias() {
     // Lógica para redirigir a la página de realizar diagnóstico de incidencia
-      this.router.navigate(['/incidents-view']);
+      this.router.navigate(['/incidents-view'],{ state: { toast: 2 } });
       }
 
       verMisIncidenciasAsignadas() {
         // Lógica para redirigir a la página de ver mis incidencias asignadas
-        this.router.navigate(['/incidents-view'],{ state: { toast: this.toast } });
+        this.router.navigate(['/incidents-view'],{ state: { toast: 1 } });
   }
   verDiagnosticos() {
     // Lógica para redirigir a la página de ver mis diagnósticos

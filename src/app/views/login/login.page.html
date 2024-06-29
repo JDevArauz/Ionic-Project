@@ -1,11 +1,13 @@
+<ion-card-header class="bg-blue-600 border rounded-lg">
+  <ion-card-title class="text-center text-2xl font-bold text-white">Iniciar Sesión</ion-card-title>
+</ion-card-header>
+
 <ion-content color="primary" class="ion-padding">
   <div class="flex justify-center">
-    <img src="../assets/UCR.png" alt="Logo" class="h-25 w-50">
+    <img src="../assets/LOGO.png" alt="Logo" class="h-25 w-50 rounded-lg">
   </div>
-  <ion-card-header>
-    <ion-card-title class="text-center text-2xl font-bold text-white">Iniciar Sesión</ion-card-title>
-  </ion-card-header>
-  <form [formGroup]="loginForm" (submit)="onLogin()">
+
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <ion-card-content>
       <div class="rounded-lg border p-5 bg-white">
         <div class="mb-4">
@@ -13,23 +15,29 @@
           <input
             formControlName="CT_Correo"
             type="email"
-            class="mt-1 text-gray-500
-            font- block w-full border-gray-500 rounded-md shadow-sm hover:border-blue-500 focus:border-indigo-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50"
+            class="mt-1 block w-full px-3 py-2 placeholder-gray-500
+                   border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
             placeholder="nombre.apellidos@ucr.ac.cr"
+            [ngClass]="{'border-red-500': loginForm.get('CT_Correo')?.invalid && (loginForm.get('CT_Correo')?.dirty || loginForm.get('CT_Correo')?.touched)}"
           />
+          <div *ngIf="loginForm.get('CT_Correo')?.invalid && (loginForm.get('CT_Correo')?.dirty || loginForm.get('CT_Correo')?.touched)"
+               class="text-red-500 text-sm mt-1">Correo institucional es requerido</div>
         </div>
         <div class="mb-4">
           <label for="password" class="block text-sm font-bold text-blue-700">Contraseña</label>
           <input
             formControlName="CT_Contrasena"
             type="password"
-            class="mt-1 block w-full text-gray-500
-            font- border-gray-500 rounded-md shadow-sm hover:border-blue-500 focus:border-indigo-500 focus:ring focus:ring-yellow-500 focus:ring-opacity-50"
+            class="mt-1 block w-full px-3 py-2 placeholder-gray-500
+                   border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
             placeholder="701230456"
+            [ngClass]="{'border-red-500': loginForm.get('CT_Contrasena')?.invalid && (loginForm.get('CT_Contrasena')?.dirty || loginForm.get('CT_Contrasena')?.touched)}"
           />
+          <div *ngIf="loginForm.get('CT_Contrasena')?.invalid && (loginForm.get('CT_Contrasena')?.dirty || loginForm.get('CT_Contrasena')?.touched)"
+               class="text-red-500 text-sm mt-1">Contraseña es requerida</div>
         </div>
         <div class="mb-4">
-          <button type="submit" class="bg-blue-500 shadow-lg hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Iniciar Sesión
           </button>
         </div>
@@ -37,8 +45,3 @@
     </ion-card-content>
   </form>
 </ion-content>
-<ion-footer>
-  <ion-toolbar color="ligth">
-    <ion-title class="text-right text-gray-600 font-sans">© 2024 Universidad de Costa Rica.</ion-title>
-  </ion-toolbar>
-</ion-footer>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-filter-modal',
@@ -9,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./filter-modal.component.scss'],
 })
 export class FilterModalComponent implements OnInit {
+  api: any = this.authService.getApiUrl();
   filterForm: FormGroup;
   estados: any[] = [];
   prioridades: any[] = [];
@@ -17,6 +19,7 @@ export class FilterModalComponent implements OnInit {
     private fb: FormBuilder,
     private modalCtrl: ModalController,
     private http: HttpClient,
+    private authService: AuthService,
   ) {
     this.filterForm = this.fb.group({
       estado: [null],
@@ -31,7 +34,7 @@ export class FilterModalComponent implements OnInit {
 
   async loadEstados() {
     try {
-      this.http.get<any[]>('https://ing-software-q0bk.onrender.com/api/states').subscribe(response => {
+      this.http.get<any[]>(`${this.api}/states`).subscribe(response => {
         this.estados = response;
       });
     } catch (error) {
@@ -41,7 +44,7 @@ export class FilterModalComponent implements OnInit {
 
   async loadPrioridades() {
     try {
-      this.http.get<any[]>('https://ing-software-q0bk.onrender.com/api/priorities').subscribe(response => {
+      this.http.get<any[]>(`${this.api}/priorities`).subscribe(response => {
         this.prioridades = response;
       });
     } catch (error) {

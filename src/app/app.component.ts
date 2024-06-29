@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  usuarioAutenticado: boolean = false;
+
   constructor(
     private platform: Platform,
     private authService: AuthService,
@@ -17,16 +19,23 @@ export class AppComponent implements OnInit {
     this.initializeApp();
   }
 
-  initializeApp() {
-    this.platform.ready().then(async () => {
-      const token = await this.authService.getAccessToken();
-      if (token) {
-        this.router.navigate(['/home']);
-      } else {
-        this.router.navigate(['/login']);
-      }
-    });
+  async initializeApp() {
+    await this.platform.ready();
+    await this.verificarAutenticacion();
   }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    await this.verificarAutenticacion();
+  }
+
+  async verificarAutenticacion() {
+    const token = await this.authService.getAccessToken();
+    if (token) {
+      this.usuarioAutenticado = true;
+      this.router.navigate(['/home']); // Redirigir a la página principal
+    } else {
+      this.usuarioAutenticado = false;
+      this.router.navigate(['/login']); // Redirigir al inicio de sesión
+    }
+  }
 }

@@ -1,43 +1,45 @@
-<ion-content color="primary" class="ion-padding">
+<ion-content color="primary" class="ion-padding bg-primary">
   <div class="flex justify-center">
     <img src="../assets/UCR.png" alt="Logo" class="h-25 w-50">
   </div>
-  <ion-card-header>
-    <ion-card-title class="text-center text-2xl font-bold text-white">Administrador</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <div class="rounded-lg border p-5 bg-white">
-      <div class="mb-4">
-        <ion-button expand="block" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
-          Gestionar Incidencias
+  <ion-card-title class="text-center text-2xl font-bold text-white mb-4">Bienvenido(a) Supervisor {{ userName }}</ion-card-title>
+  <div class="rounded-lg border p-5 bg-white">
+    <div class="grid grid-cols-2 gap-4">
+      <div class="flex flex-col justify-center items-center">
+        <ion-button size="large" expand="block" class="bg-blue-500 text-white font-bold rounded-full"
+                    >
+          <ion-icon slot="icon-only" ios="add-circle" md="add-circle-sharp" class="text-4xl"></ion-icon>
         </ion-button>
+        <span class="text-center mt-2 text-blue-500 font-semibold">Registrar Incidencia</span>
       </div>
-      <div class="mb-4">
-        <ion-button expand="block" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
-          Gestionar Roles
+      <div class="flex flex-col justify-center items-center">
+        <ion-button size="large" expand="block" class="bg-blue-500 text-white font-bold rounded-full"
+                    >
+          <ion-icon slot="icon-only" ios="eye" md="eye-sharp" class="text-4xl"></ion-icon>
         </ion-button>
+        <span class="text-center mt-2 text-blue-500 font-semibold">Ver Incidencias Generadas</span>
       </div>
-      <div class="mb-4">
-        <ion-button expand="block" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
-          Gestionar Usuarios
+      <div class="flex flex-col justify-center items-center">
+        <ion-button size="large" expand="block" class="bg-blue-500 text-white font-bold rounded-full"
+                    >
+          <ion-icon slot="icon-only" ios="construct" md="construct-sharp" class="text-4xl"></ion-icon>
         </ion-button>
+        <span class="text-center mt-2 text-blue-500 font-semibold">Gestionar Diagnósticos</span>
       </div>
-      <div class="mb-4">
-        <ion-button expand="block" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
-          Gestionar Pantallas
+      <div class="flex flex-col justify-center items-center">
+        <ion-button size="large" expand="block" class="bg-blue-500 text-white font-bold rounded-full"
+                    >
+          <ion-icon slot="icon-only" ios="tv" md="tv-sharp" class="text-4xl"></ion-icon>
         </ion-button>
+        <span class="text-center mt-2 text-blue-500 font-semibold">Gestionar Pantallas</span>
       </div>
-      <div class="mb-4">
-        <ion-button expand="block" class="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-        (click)="reporteView()">
-          Reporte de Cargas de Trabajo
+      <div class="flex flex-col justify-center items-center">
+        <ion-button size="large" expand="block" class="bg-blue-500 text-white font-bold rounded-full"
+                    (click)="reporteView()">
+          <ion-icon slot="icon-only" ios="bar-chart" md="bar-chart-sharp" class="text-4xl"></ion-icon>
         </ion-button>
+        <span class="text-center mt-2 text-blue-500 font-semibold">Reporte de Cargas de Trabajo</span>
       </div>
     </div>
-  </ion-card-content>
+  </div>
 </ion-content>
-<ion-footer>
-  <ion-toolbar color="light">
-    <ion-title class="text-right text-gray-600 font-sans">© 2024 Universidad de Costa Rica.</ion-title>
-  </ion-toolbar>
-</ion-footer>

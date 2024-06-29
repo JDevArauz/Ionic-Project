@@ -5,6 +5,8 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../../helpers/loading.service';
 import { NotificationService } from '../../helpers/notification.service';
+import { LogsService } from 'src/app/services/logs.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-assign-issue',
@@ -12,6 +14,8 @@ import { NotificationService } from '../../helpers/notification.service';
   styleUrls: ['./assign-issue.page.scss'],
 })
 export class AssignIssuePage implements OnInit {
+  // Definición de variables
+  api: any = this.authService.getApiUrl();
   incidentForm: FormGroup;
   incidencia: any;
   tecnicos: any[] = []; // Aquí almacenaremos los técnicos disponibles
@@ -26,8 +30,11 @@ export class AssignIssuePage implements OnInit {
     private authService: AuthService,
     private http: HttpClient,
     private loadingService: LoadingService,
-    private notificationService: NotificationService
+    private logsService: LogsService,
+    private notificationService: NotificationService,
+    private navCtrl: NavController,
   ) {
+    // Inicialización del formulario con validaciones
     this.incidentForm = this.fb.group({
       titulo: ['', Validators.required],
       tecnico: ['', Validators.required],
@@ -39,23 +46,26 @@ export class AssignIssuePage implements OnInit {
   }
 
   ngOnInit() {
+    // Verificamos si hay una incidencia en el estado del historial
     if (history.state && history.state.incidencia) {
       this.incidencia = history.state.incidencia;
+      // Cargar los datos necesarios para el formulario
       this.loadTecnicos();
       this.loadAfectaciones();
       this.loadRiesgos();
       this.loadPrioridades();
       this.loadCategorias();
+      // Prellenar el formulario con los datos de la incidencia
       this.prefillForm(this.incidencia);
     } else {
       console.error('No se pudo encontrar la incidencia en el estado de la historia.');
     }
-
   }
 
+  // Método para cargar técnicos disponibles
   loadTecnicos() {
     this.authService.getAccessToken().then((token) => {
-      this.http.get<any[]>('https://ing-software-q0bk.onrender.com/api/asignations/tecnicos').subscribe(
+      this.http.get<any[]>(`${this.api}/asignations/tecnicos`).subscribe(
         (data) => {
           this.tecnicos = data;
           console.log('Técnicos recuperados', data);
@@ -67,9 +77,10 @@ export class AssignIssuePage implements OnInit {
     });
   }
 
+  // Método para cargar afectaciones disponibles
   loadAfectaciones() {
     this.authService.getAccessToken().then((token) => {
-      this.http.get<any[]>('https://ing-software-q0bk.onrender.com/api/afectations').subscribe(
+      this.http.get<any[]>(`${this.api}/afectations`).subscribe(
         (data) => {
           this.afectaciones = data;
           console.log('Afectaciones recuperadas', data);
@@ -81,9 +92,10 @@ export class AssignIssuePage implements OnInit {
     });
   }
 
+  // Método para cargar riesgos disponibles
   loadRiesgos() {
     this.authService.getAccessToken().then((token) => {
-      this.http.get<any[]>('https://ing-software-q0bk.onrender.com/api/risks').subscribe(
+      this.http.get<any[]>(`${this.api}/risks`).subscribe(
         (data) => {
           this.riesgos = data;
           console.log('Riesgos recuperados', data);
@@ -93,11 +105,12 @@ export class AssignIssuePage implements OnInit {
         }
       );
     });
-}
+  }
 
+  // Método para cargar prioridades disponibles
   loadPrioridades() {
     this.authService.getAccessToken().then((token) => {
-      this.http.get<any[]>('https://ing-software-q0bk.onrender.com/api/priorities').subscribe(
+      this.http.get<any[]>(`${this.api}/priorities`).subscribe(
         (data) => {
           this.prioridades = data;
           console.log('Prioridades recuperadas', data);
@@ -109,9 +122,10 @@ export class AssignIssuePage implements OnInit {
     });
   }
 
+  // Método para cargar categorías disponibles
   loadCategorias() {
     this.authService.getAccessToken().then((token) => {
-      this.http.get<any[]>('https://ing-software-q0bk.onrender.com/api/categories').subscribe(
+      this.http.get<any[]>(`${this.api}/categories`).subscribe(
         (data) => {
           this.categorias = data;
           console.log('Categorías recuperadas', data);
@@ -123,6 +137,7 @@ export class AssignIssuePage implements OnInit {
     });
   }
 
+  // Método para prellenar el formulario con los datos de la incidencia
   prefillForm(incidencia: any) {
     this.incidentForm.patchValue({
       titulo: incidencia.CT_Titulo_Incidencia,
@@ -133,9 +148,9 @@ export class AssignIssuePage implements OnInit {
     });
   }
 
+  // Método que se ejecuta al enviar el formulario
   onSubmit() {
     if (this.incidentForm.valid) {
-      this.loadingService.presentLoading('Asignando incidencia...');
       const formData = {
         CN_ID_Usuario: this.incidentForm.value.tecnico,
         CN_ID_Incidente: this.incidencia.CN_ID_Incidente,
@@ -144,33 +159,94 @@ export class AssignIssuePage implements OnInit {
         CN_ID_Prioridad: this.incidentForm.value.prioridad,
         CN_ID_Categoria: this.incidentForm.value.categoria
       };
+      // Obtener el token de acceso y realizar la solicitud para asignar la incidencia
       this.authService.getAccessToken().then((token) => {
-        this.http.post<any>('https://ing-software-q0bk.onrender.com/api/asignations', formData).subscribe(
+        this.http.post<any>(`${this.api}/asignations`, formData).subscribe(
           (data) => {
             console.log('Incidencia asignada', data);
             this.notificationService.presentToast('Incidencia asignada correctamente', 'success');
-            this.router.navigate(['/incidents-view']);
           },
           (error) => {
             console.error('Error al asignar incidencia', error);
             this.notificationService.presentToast('Error al asignar incidencia', 'danger');
           }
         );
+
         const dataUpdate = {
-        CN_ID_Estado_Incidencia: 2,
-        CN_ID_Afectacion_Incidencia: this.incidentForm.value.afectacion,
-        CN_ID_Riesgo_Incidencia: this.incidentForm.value.riesgo,
-        CN_ID_Prioridad_Incidencia: this.incidentForm.value.prioridad,
-        CN_ID_Categoria_Incidencia: this.incidentForm.value.categoria
+          CN_ID_Estado_Incidencia: 2,
+          CN_ID_Afectacion_Incidencia: this.incidentForm.value.afectacion,
+          CN_ID_Riesgo_Incidencia: this.incidentForm.value.riesgo,
+          CN_ID_Prioridad_Incidencia: this.incidentForm.value.prioridad,
+          CN_ID_Categoria_Incidencia: this.incidentForm.value.categoria
         };
-        this.http.put<any>(`https://ing-software-q0bk.onrender.com/api/incidents/${this.incidencia.CN_ID_Incidente}`, {dataUpdate}).subscribe(
+
+        // Realizar la solicitud para actualizar el estado de la incidencia
+        this.http.put<any>(`${this.api}/incidents/${this.incidencia.CN_ID_Incidente}`, dataUpdate).subscribe(
+          async (data) => {
+            const user = await this.authService.getUserFromToken();
+            console.log('Incidencia actualizada', data);
+            this.logsService.saveGeneralLog({
+              CN_ID_Usuario: formData.CN_ID_Usuario,
+              CN_ID_Pantalla: 3,
+              CN_ID_Sistema: 1,
+              CT_Referencia: "ASIGNACION DE INCIDENCIA:" + this.incidencia.CT_Titulo_Incidencia + "-TECNICO:" + user.CT_Nombre
+            }).then((response) => {
+              const dataLog = {
+                CN_ID_Usuario: user.CN_ID_Usuario,
+                CN_ID_Incidente: this.incidencia.CN_ID_Incidente,
+                CN_Estado_Actual: 1,
+                CN_Nuevo_Estado: 2,
+                // Añadir más datos necesarios para el registro de log
+              };
+              // Enviar registro de log
+              this.http.post(`${this.api}/logsE`, dataLog).subscribe(
+                (data) => {
+                  const dataLog = {
+                    CN_ID_Usuario: user.CN_ID_Usuario,
+                    CN_ID_Incidente: this.incidencia.CN_ID_Incidente,
+                    CN_Estado_Actual: 2,
+                    CN_Nuevo_Estado: 3,
+                    // Añadir más datos necesarios para el registro de log
+                  };
+
+                  // Enviar registro de log
+                  this.http.post(`${this.api}/logsE`, dataLog).subscribe(
+                    (data) => {
+                      this.http.put(`${this.api}/incidents/${this.incidencia.CN_ID_Incidente}`, { CN_ID_Estado_Incidencia: 3 }).subscribe(
+                        (data) => {
+                          console.log('Incidencia actualizada', data);
+                        },
+                        (error) => {
+                          console.error('Error al actualizar la incidencia', error);
+                        }
+                      );
+                    },
+                    (error) => {
+                      console.error('Error al crear el log', error);
+                    }
+                  );
+
+                },
+                (error) => {
+                  console.error('Error al crear el log', error);
+                }
+              );
+
+            },
+            (error) => {
+              console.error('Error al guardar log', error);
+            });
+            this.notificationService.presentToast('Incidencia asignada correctamente', 'success');
+            this.navCtrl.back();
+          },
           (error) => {
-            this.notificationService.presentToast('Error al actualizar incidencia', 'danger');
+            console.error('Error al actualizar la incidencia', error);
+            this.notificationService.presentToast('Error al actualizar la incidencia', 'danger');
           }
-        ).add(() => {
-          this.loadingService.dismissLoading();
-        });
+        );
       });
+    } else {
+      this.notificationService.presentToast('Por favor complete todos los campos requeridos', 'danger');
     }
   }
 }

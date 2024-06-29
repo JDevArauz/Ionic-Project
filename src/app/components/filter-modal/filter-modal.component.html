@@ -1,26 +1,26 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Filtrar Incidencias</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Cerrar</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<div class="bg-blue-500 text-white p-4 flex justify-between items-center">
+  <h1 class="text-xl font-bold">Filtrar Incidencias</h1>
+  <button (click)="dismissModal()" class="bg-transparent border-none text-white font-bold">Cerrar</button>
+</div>
+<ion-content>
+<div class="bg-blue-500 p-4 h-full">
+  <form [formGroup]="filterForm" class="space-y-4">
+    <div class="bg-white rounded-lg shadow-md p-4">
+      <label class="block text-blue-700 font-bold mb-2">Estado</label>
+      <select formControlName="estado" class="w-full p-2 text-black bg-gray-200 border border-gray-300 rounded-lg hover:bg-gray-100 font-bold">
+        <option [value]="null" disabled selected hidden>Seleccione el estado</option>
+        <option *ngFor="let estado of estados" [value]="estado.CN_ID_Estado">{{ estado.CT_Descripcion }}</option>
+      </select>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-4">
+      <label class="block text-blue-700 font-bold mb-2">Prioridad</label>
+      <select formControlName="prioridad" class="w-full p-2 text-black bg-gray-200 border border-gray-300 rounded-lg hover:bg-gray-100 font-bold">
+        <option [value]="null" disabled selected hidden>Seleccione la prioridad</option>
+        <option *ngFor="let prioridad of prioridades" [value]="prioridad.CN_ID_Prioridad">{{ prioridad.CT_Descripcion }}</option>
+      </select>
+    </div>
 
-<ion-content class="ion-padding">
-  <form [formGroup]="filterForm">
-    <ion-item>
-      <ion-label>Estado</ion-label>
-      <ion-select formControlName="estado">
-        <ion-select-option *ngFor="let estado of estados" [value]="estado.CN_ID_Estado">{{ estado.CT_Descripcion }}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Prioridad</ion-label>
-      <ion-select formControlName="prioridad">
-        <ion-select-option *ngFor="let prioridad of prioridades" [value]="prioridad.CN_ID_Prioridad">{{ prioridad.CT_Descripcion }}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-button expand="block" (click)="applyFilter()">Aplicar Filtro</ion-button>
+    <button type="button" (click)="applyFilter()" class="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 font-bold">Aplicar Filtro</button>
   </form>
+</div>
 </ion-content>

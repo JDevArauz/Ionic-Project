@@ -1,7 +1,8 @@
 <ion-content color="primary">
-  <ion-card-header color="primary">
+  <ion-card-header class="bg-blue-600 border rounded-lg">
     <ion-card-title class="text-center text-2xl font-bold text-white">Registrar Incidencia</ion-card-title>
   </ion-card-header>
+
   <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
     <ion-card-content color="primary">
       <div class="rounded-lg border p-5 bg-white">
@@ -46,9 +47,17 @@
         <div class="mb-4">
           <label for="imagenes" class="block text-sm font-bold text-blue-700">Adjuntar Imágenes (Evidencia)</label>
           <div class="flex justify-between mt-2">
-            <ion-button class="text-white" (click)="tomarFoto()">Tomar Foto</ion-button>
-            <ion-button class="text-white" (click)="subirFotos()">Subir Fotos</ion-button>
+            <ion-button (click)="tomarFoto()" class="text-white font-bold text-xs">
+              <ion-icon name="camera-outline" slot="start"></ion-icon>
+              Tomar Foto
+            </ion-button>
+
+            <ion-button (click)="subirFotos()" class="text-white font-bold text-xs">
+              <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+              Subir Fotos
+            </ion-button>
           </div>
+
           <div class="grid grid-cols-3 gap-4 mt-4">
             <div *ngFor="let photo of photos; let i = index" class="relative">
               <img [src]="photo" alt="Foto tomada" class="w-full h-auto sm:h-40 md:h-64 lg:h-80 xl:h-96" style="border: 1px solid #ccc;">
@@ -64,11 +73,15 @@
         </ion-button>
       </div>
     </ion-card-content>
-  </form>
+  </form>"
+  <div class="rounded-lg border-gray-500 bg-white text-yellow-500 py-2">
+    <p class="text-bold text-center font-bold">Incidencias Registradas</p>
+  <ion-card-content class="bg-white rounded-sm">
+    <div *ngFor="let incidencia of incidencias" class="mb-4 p-4 bg-blue-500 rounded-lg border">
+      <div class="text-center font-bold text-white">{{ incidencia.CT_Titulo_Incidencia}}</div>
+      <p class="text-gray-100">Descripción: {{ incidencia.CT_Descripcion_Incidencia}}</p>
+      <p class="text-gray-100">Lugar: {{ incidencia.CT_Lugar_Incidencia }}</p>
+    </div>
+  </ion-card-content>
+</div>
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar color="ligth">
-    <ion-title class="text-right text-gray-600 font-sans">© 2024 Universidad de Costa Rica.</ion-title>
-  </ion-toolbar>
-</ion-footer>

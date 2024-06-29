@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Ver Evidencias</ion-title>
+    <ion-title class="text-white">Ver Evidencias</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">
         <ion-icon slot="icon-only" name="close"></ion-icon>
@@ -9,10 +9,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="grid grid-cols-2 gap-2">
-    <div *ngFor="let photo of photos; let i = index" class="relative">
-      <img [src]="photo" alt="Foto tomada" class="w-full h-full sm:h-40 md:h-64 lg:h-80 xl:h-96" style="border: 1px solid #ccc;">
+<ion-content class="bg-white">
+  <div class="p-4">
+    <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+      <div *ngFor="let photo of photos; let i = index" class="relative">
+        <img [src]="photo" alt="Foto tomada" class="w-full h-40 sm:h-48 md:h-56 lg:h-64 xl:h-72 object-cover border border-gray-300">
+      </div>
+
+    </div>
+    <div *ngIf="photos?.length === 0" class="flex flex-col items-center text-white font-bold my-4">
+      <ion-icon name="information-circle-outline" size="large"></ion-icon>
+      <p>No hay evidencias para mostrar</p>
     </div>
   </div>
 </ion-content>

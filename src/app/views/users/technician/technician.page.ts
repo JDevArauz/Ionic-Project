@@ -10,7 +10,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./technician.page.scss'],
 })
 export class TechnicianPage implements OnInit {
-  toast: any = true;
   userName: string = '';
 
   constructor(private user:UserService, private navCtrl: NavController, private router: Router) { }
@@ -21,7 +20,7 @@ export class TechnicianPage implements OnInit {
 
   verIncidenciasGeneradas() {
     // Lógica para redirigir a la página de ver incidencias generadas
-    this.router.navigate(['/incidents-view'],{ state: { toast: this.toast } });
+    this.router.navigate(['/incidents-view'],{ state: { toast: 0 } });
   }
 
   realizarDiagnostico() {
@@ -31,7 +30,7 @@ export class TechnicianPage implements OnInit {
 
       verMisIncidenciasAsignadas() {
         // Lógica para redirigir a la página de ver mis incidencias asignadas
-        this.router.navigate(['/incidents-view'],{ state: { toast: this.toast } });
+        this.router.navigate(['/incidents-view'],{ state: { toast: 1 } });
   }
   verIncidenciasDiagnosticadas() {
     // Lógica para redirigir a la página de ver mis diagnósticos
